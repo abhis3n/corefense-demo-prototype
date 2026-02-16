@@ -16,9 +16,9 @@ jobs:
         with:
           path: ${{ github.repository }}
         
-      - uses: ./.github/actions/install-deps
+      - uses: ./${{ github.repository }}/.github/actions/install-deps
 
-      - uses: ./.github/actions/build-agl-image
+      - uses: ./${{ github.repository }}/.github/actions/build-agl-image
         with:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           JOB_ID: ${{ github.job }}

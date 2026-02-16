@@ -12,6 +12,12 @@ inputs:
     description: "Path to the AGL repository"
     required: true
 
+outputs:
+  KERNEL:
+    description: "Relative path to the kernel image"
+  ROOTFS:
+    description: "Relative path to the rootfs image"
+    
 runs:
   using: "composite"
   steps:

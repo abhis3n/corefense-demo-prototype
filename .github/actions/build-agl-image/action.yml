@@ -12,13 +12,6 @@ inputs:
     description: "Path to the AGL repository"
     required: true
 
-# Return relative paths to the built kernel and rootfs images for Qemu boot step   
-outputs:
-  KERNEL_IMAGE:
-    description: "Relative path to the kernel image"
-  ROOTFS_IMAGE:
-    description: "Relative path to the rootfs image"
-
 runs:
   using: "composite"
   steps:
@@ -57,8 +50,8 @@ runs:
         echo "Building AGL image with meta-corefense layer..." 
         bitbake agl-image-minimal
         echo "AGL build completed. Setting output variables for kernel and rootfs images..."
-        echo "KERNEL_IMAGE=tmp/deploy/images/qemux86-64/bzImage" >> $GITHUB_OUTPUT
-        echo "ROOTFS_IMAGE=tmp/deploy/images/qemux86-64/agl-image-minimal-qemux86-64.rootfs.ext4" >> $GITHUB_OUTPUT
+        echo "KERNEL=tmp/deploy/images/qemux86-64/bzImage" >> $GITHUB_OUTPUT
+        echo "ROOTFS=tmp/deploy/images/qemux86-64/agl-image-minimal-qemux86-64.rootfs.ext4" >> $GITHUB_OUTPUT
 
    - name: Cleanup Yocto Build Artifacts
      shell: bash

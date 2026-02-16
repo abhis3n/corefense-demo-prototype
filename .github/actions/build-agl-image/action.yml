@@ -1,0 +1,52 @@
+name: Build AGL Image
+description: Build agl-image-minimal
+inputs:
+  CLIENT_ID:
+    description: "Client ID for the build"
+    required: true
+  JOB_ID:
+    description: "GitHub Job ID for the build"
+    required: true
+  REPO_PATH:
+    description: "Path to the AGL repository"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+   - name: Setup AGL Build Environment
+     shell: bash
+     run: |
+        echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+        echo "Cloning AGL repository..."
+        mkdir -p $GITHUB_WORKSPACE/AGL/trout && cd $GITHUB_WORKSPACE/AGL/trout
+        echo "Cloning AGL repository..."
+        repo init -b trout -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
+        repo sync
+
+   - name: Pull meta-corefense layer
+     shell: bash
+     env:
+       BB_ENV_PASSTHROUGH_ADDITIONS: "CLIENT_ID JOB_ID"
+       CLIENT_ID: ${{ inputs.CLIENT_ID }}
+       JOB_ID: ${{ inputs.JOB_ID }}
+       REPO_PATH: ${{ inputs.REPO_PATH }}
+     run: |
+        cd $GITHUB_WORKSPACE/AGL/trout
+        echo "Cloning meta-corefense layer..."
+        git clone --branch abhis3n/prototype https://github.com/corefense-security/meta-corefense.git 
+        if [ ! -d "$GITHUB_WORKSPACE/demo/AGL/qemux86-64" ]; then
+          source trout/meta-agl/scripts/aglsetup.sh -m qemux86-64 -b $GITHUB_WORKSPACE/demo/AGL/qemux86-64 agl-all-features agl-selinux
+        else
+          source $GITHUB_WORKSPACE/demo/AGL/qemux86-64/agl-init-build-env
+        fi
+        bitbake-layer add-layer $GITHUB_WORKSPACE/AGL/trout/meta-corefense-security/AGL/meta-corefense
+        cat $REPO_PATH/conf.append/AGL/local.conf.append >> $GITHUB_WORKSPACE/demo/AGL/qemux86-64/conf/local.conf
+        echo "Building AGL image with meta-corefense layer..." 
+        bitbake agl-image-minimal
+
+   - name: Cleanup Yocto Build Artifacts
+     shell: bash
+     run: |
+        echo "Deleting AGL repo artifacts to save space..."
+        rm -rf $GITHUB_WORKSPACE/AGL

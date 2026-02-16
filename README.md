@@ -1,2 +1,2 @@
-# demo-cerberos-prototype
-Repo to demo CI-based Yocto image scanning and reporting using the Cerberos scanner prototype.
+# corefense-prototype-demo
+Collection of CI-based, Yocto demos for Corefense scanner

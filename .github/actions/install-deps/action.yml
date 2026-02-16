@@ -1,0 +1,18 @@
+name: Install Build Dependencies
+description: Install dependencies for Yocto image build
+
+runs:
+  using: "composite"
+  steps:
+   - name: Install Dependencies
+     shell: bash
+     run: |
+        echo $GITHUB_WORKSPACE
+        if pgrep apt-get >/dev/null; then
+          sudo pkill -9 apt-get
+        fi
+        sudo apt-get update
+        sudo apt-get install -y docker.io gawk file wget git-core diffstat unzip texinfo gcc-multilib build-essential \
+        chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping \
+        libsdl1.2-dev xterm libacl1 liblz4-tool locales python3-git python3-jinja2 python3-subunit \
+        zstd qemu-system-x86

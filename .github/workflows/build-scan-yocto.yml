@@ -1,0 +1,32 @@
+name: Scan AGL Image
+
+on:
+  push:
+    branches: ['demo']
+  workflow_dispatch:
+
+jobs:
+  build-yocto:
+    name: Build & Scan AGL Image
+    runs-on: [self-hosted, yocto-demo-runner-1]
+  
+    steps:
+      - name: Checkout Demo repo
+        uses: actions/checkout@v4
+        with:
+          path: ${{ github.repository }}
+        
+      - uses: ./.github/actions/install-deps
+
+      - uses: ./.github/actions/build-agl-image
+        with:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          JOB_ID: ${{ github.job }}
+          REPO_PATH: ${{ github.repository }}
+
+      - name: Boot Qemu
+        uses: corefense-security/corefense-scanner/.github/actions/boot-qemu/agl@abhis3n/updates
+        with:
+          KERNEL_IMAGE: $GITHUB_WORKSPACE/tmp/deploy/images/qemux86-64/bzImage
+          ROOTFS_IMAGE: $GITHUB_WORKSPACE/tmp/deploy/images/qemux86-64/agl-image-minimal-qemux86-64.rootfs.ext4
+          TARGET_ARCH: x86-64

@@ -14,15 +14,15 @@ jobs:
       - name: Checkout Demo repo
         uses: actions/checkout@v4
         with:
-          path: ${{ github.repository }}
+          path: corefense-agl-demo
         
-      - uses: ./${{ github.repository }}/.github/actions/install-deps
+      - uses: ./corefense-agl-demo/.github/actions/install-deps
 
-      - uses: ./${{ github.repository }}/.github/actions/build-agl-image
+      - uses: ./corefense-agl-demo/.github/actions/build-agl-image
         with:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           JOB_ID: ${{ github.job }}
-          REPO_PATH: ${{ github.repository }}
+          REPO_PATH: corefense-agl-demo
 
       - name: Boot Qemu
         uses: corefense-security/corefense-scanner/.github/actions/boot-qemu/agl@abhis3n/updates

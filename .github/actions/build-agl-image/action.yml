@@ -30,7 +30,7 @@ runs:
        BB_ENV_PASSTHROUGH_ADDITIONS: "CLIENT_ID JOB_ID"
        CLIENT_ID: ${{ inputs.CLIENT_ID }}
        JOB_ID: ${{ inputs.JOB_ID }}
-       REPO_PATH: ${{ inputs.REPO_PATH }}
+       REPO_PATH: $GITHUB_WORKSPACE/${{ inputs.REPO_PATH }}
      run: |
         cd $GITHUB_WORKSPACE/AGL/trout
         echo "Cloning meta-corefense layer..."

@@ -20,14 +20,16 @@ jobs:
       - uses: ./corefense-agl-demo/.github/actions/install-deps
 
       - uses: ./corefense-agl-demo/.github/actions/build-agl-image
+        id: build-agl
         with:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           JOB_ID: ${{ github.run_id }}
           REPO_PATH: corefense-agl-demo
 
-      - name: Boot Qemu
+      # Boot image in QEMU using a reusable action
+      - name: Scan agl-image-minimal with Corefense Scanner
         uses: corefense-security/corefense-scanner/.github/actions/boot-qemu/agl@abhis3n/updates
         with:
-          KERNEL_IMAGE: $GITHUB_WORKSPACE/tmp/deploy/images/qemux86-64/bzImage
-          ROOTFS_IMAGE: $GITHUB_WORKSPACE/tmp/deploy/images/qemux86-64/agl-image-minimal-qemux86-64.rootfs.ext4
+          KERNEL_IMAGE: $GITHUB_WORKSPACE/demo/AGL/${{ steps.build-agl.outputs.KERNEL_IMAGE }}
+          ROOTFS_IMAGE: $GITHUB_WORKSPACE/demo/AGL/${{ steps.build-agl.outputs.ROOTFS_IMAGE }}
           TARGET_ARCH: x86-64

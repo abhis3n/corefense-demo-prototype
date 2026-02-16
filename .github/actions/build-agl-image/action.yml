@@ -1,5 +1,6 @@
 name: Build AGL Image
 description: Build agl-image-minimal
+
 inputs:
   CLIENT_ID:
     description: "Client ID for the build"
@@ -10,6 +11,13 @@ inputs:
   REPO_PATH:
     description: "Path to the AGL repository"
     required: true
+
+# Return relative paths to the built kernel and rootfs images for Qemu boot step   
+outputs:
+  KERNEL_IMAGE:
+    description: "Relative path to the kernel image"
+  ROOTFS_IMAGE:
+    description: "Relative path to the rootfs image"
 
 runs:
   using: "composite"
@@ -48,6 +56,10 @@ runs:
         fi
         echo "Building AGL image with meta-corefense layer..." 
         bitbake agl-image-minimal
+        echo "AGL build completed. Setting output variables for kernel and rootfs images..."
+        echo "::set-output name=KERNEL_IMAGE::tmp/deploy/images/qemux86-64/bzImage"
+        echo "::set-output name=ROOTFS_IMAGE::tmp/deploy/images/qemux86-64/agl-image-minimal-qemux86-64.rootfs.ext4"
+
 
    - name: Cleanup Yocto Build Artifacts
      shell: bash

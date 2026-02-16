@@ -27,9 +27,10 @@ jobs:
           REPO_PATH: corefense-agl-demo
 
       - name: Debug Outputs
+        shell: bash
         run: |
-        echo "KERNEL: ${{ steps.build-agl.outputs.KERNEL }}"
-        echo "ROOTFS: ${{ steps.build-agl.outputs.ROOTFS }}"
+          echo "KERNEL: ${{ steps.build-agl.outputs.KERNEL }}"
+          echo "ROOTFS: ${{ steps.build-agl.outputs.ROOTFS }}"
       
       # Boot image in QEMU using a reusable action
       - name: Boot and Scan agl-image-minimal

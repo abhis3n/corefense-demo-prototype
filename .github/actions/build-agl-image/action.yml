@@ -15,8 +15,10 @@ inputs:
 outputs:
   KERNEL:
     description: "Relative path to the kernel image"
+    value: ${{ steps.set_output.outputs.KERNEL }}
   ROOTFS:
     description: "Relative path to the rootfs image"
+    value: ${{ steps.set_output.outputs.ROOTFS }}
     
 runs:
   using: "composite"
@@ -60,10 +62,8 @@ runs:
    - name: Set Output Variables
      shell: bash
      run: |
-       KERNEL_PATH=$(find $GITHUB_WORKSPACE/demo/AGL/qemux86-64/tmp/deploy/images/qemux86-64 -name "bzImage" | head -n 1)
-       ROOTFS_PATH=$(find $GITHUB_WORKSPACE/demo/AGL/qemux86-64/tmp/deploy/images/qemux86-64 -name "agl-image-minimal-qemux86-64.rootfs.ext4" | head -n 1)
-       echo "KERNEL=$KERNEL_PATH" >> $GITHUB_OUTPUT
-       echo "ROOTFS=$ROOTFS_PATH" >> $GITHUB_OUTPUT
+       echo "KERNEL=$GITHUB_WORKSPACE/demo/AGL/qemux86-64/tmp/deploy/images/qemux86-64/bzImage" >> $GITHUB_OUTPUT
+       echo "ROOTFS=$GITHUB_WORKSPACE/demo/AGL/qemux86-64/tmp/deploy/images/qemux86-64/agl-image-minimal-qemux86-64.rootfs.ext4" >> $GITHUB_OUTPUT
 
    - name: Cleanup Yocto Build Artifacts
      shell: bash

@@ -42,7 +42,7 @@ runs:
         else
           source $GITHUB_WORKSPACE/demo/AGL/qemux86-64/agl-init-build-env
         fi
-        bitbake-layer add-layer $GITHUB_WORKSPACE/AGL/trout/meta-corefense-security/AGL/meta-corefense
+        bitbake-layers add-layer $GITHUB_WORKSPACE/AGL/trout/meta-corefense/AGL/meta-corefense
         cat $REPO_PATH/conf.append/AGL/local.conf.append >> $GITHUB_WORKSPACE/demo/AGL/qemux86-64/conf/local.conf
         echo "Building AGL image with meta-corefense layer..." 
         bitbake agl-image-minimal

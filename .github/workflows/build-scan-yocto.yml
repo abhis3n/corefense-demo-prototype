@@ -27,9 +27,9 @@ jobs:
           REPO_PATH: corefense-agl-demo
 
       # Boot image in QEMU using a reusable action
-      - name: Scan agl-image-minimal with Corefense Scanner
+      - name: Boot and Scan agl-image-minimal
         uses: corefense-security/corefense-scanner/.github/actions/boot-qemu/agl@abhis3n/updates
         with:
           KERNEL_IMAGE: $GITHUB_WORKSPACE/demo/AGL/${{ steps.build-agl.outputs.KERNEL_IMAGE }}
           ROOTFS_IMAGE: $GITHUB_WORKSPACE/demo/AGL/${{ steps.build-agl.outputs.ROOTFS_IMAGE }}
-          TARGET_ARCH: x86-64
+          TARGET_ARCH: x86_64

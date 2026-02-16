@@ -22,7 +22,7 @@ jobs:
       - uses: ./corefense-agl-demo/.github/actions/build-agl-image
         with:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          JOB_ID: ${{ github.job }}
+          JOB_ID: ${{ github.run_id }}
           REPO_PATH: corefense-agl-demo
 
       - name: Boot Qemu

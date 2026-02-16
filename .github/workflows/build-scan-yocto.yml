@@ -11,10 +11,11 @@ jobs:
     runs-on: [self-hosted, yocto-demo-runner-1]
   
     steps:
-      - name: Checkout Demo repo
+      - name: Checkout AGL Demo branch
         uses: actions/checkout@v4
         with:
           path: corefense-agl-demo
+          ref: demo/agl
         
       - uses: ./corefense-agl-demo/.github/actions/install-deps
 

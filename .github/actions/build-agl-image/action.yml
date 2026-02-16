@@ -49,6 +49,7 @@ runs:
 
    - name: Cleanup Yocto Build Artifacts
      shell: bash
+     if: always()
      run: |
         echo "Deleting AGL repo artifacts to save space..."
         rm -rf $GITHUB_WORKSPACE/AGL

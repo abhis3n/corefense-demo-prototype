@@ -23,7 +23,7 @@ jobs:
         with:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           JOB_ID: ${{ github.job }}
-          REPO_PATH: corefense-agl-demo
+          REPO_PATH: $GITHUB_WORKSPACE/corefense-agl-demo
 
       - name: Boot Qemu
         uses: corefense-security/corefense-scanner/.github/actions/boot-qemu/agl@abhis3n/updates

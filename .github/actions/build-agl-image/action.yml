@@ -45,6 +45,7 @@ runs:
         bitbake-layers add-layer $GITHUB_WORKSPACE/AGL/trout/meta-corefense/AGL/meta-corefense
         ls -l $GITHUB_WORKSPACE/$REPO_PATH
         cat $GITHUB_WORKSPACE/$REPO_PATH/conf.append/AGL/local.conf.append >> $GITHUB_WORKSPACE/demo/AGL/qemux86-64/conf/local.conf
+        echo "" >> $GITHUB_WORKSPACE/demo/AGL/qemux86-64/conf/local.conf
         echo "Building AGL image with meta-corefense layer..." 
         bitbake agl-image-minimal
 

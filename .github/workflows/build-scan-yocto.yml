@@ -30,6 +30,6 @@ jobs:
       - name: Boot and Scan agl-image-minimal
         uses: corefense-security/corefense-scanner/.github/actions/boot-qemu/agl@abhis3n/updates
         with:
-          KERNEL_IMAGE: $GITHUB_WORKSPACE/demo/AGL/${{ steps.build-agl.outputs.KERNEL }}
-          ROOTFS_IMAGE: $GITHUB_WORKSPACE/demo/AGL/${{ steps.build-agl.outputs.ROOTFS }}
+          KERNEL_IMAGE: ${{ steps.build-agl.outputs.KERNEL }}
+          ROOTFS_IMAGE: ${{ steps.build-agl.outputs.ROOTFS }}
           TARGET_ARCH: x86_64

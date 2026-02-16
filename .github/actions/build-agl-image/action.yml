@@ -17,7 +17,9 @@ runs:
    - name: Setup AGL Build Environment
      shell: bash
      run: |
-        echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+        if [ -f /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]; then
+          echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+        fi
         echo "Cloning AGL repository..."
         mkdir -p $GITHUB_WORKSPACE/AGL/trout && cd $GITHUB_WORKSPACE/AGL/trout
         echo "Cloning AGL repository..."

@@ -39,6 +39,7 @@ runs:
         if [ ! -d "$GITHUB_WORKSPACE/demo/AGL/qemux86-64" ]; then
           source ./meta-agl/scripts/aglsetup.sh -m qemux86-64 -b $GITHUB_WORKSPACE/demo/AGL/qemux86-64 agl-all-features agl-selinux
         else
+          cd $GITHUB_WORKSPACE/demo/AGL/qemux86-64
           source $GITHUB_WORKSPACE/demo/AGL/qemux86-64/agl-init-build-env
         fi
         bitbake-layers add-layer $GITHUB_WORKSPACE/AGL/trout/meta-corefense/AGL/meta-corefense

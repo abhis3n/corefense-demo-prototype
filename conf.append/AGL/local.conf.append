@@ -1,3 +1,6 @@
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 INHERIT += "rm_work"
 SSTATE_MIRRORS:append = " file://.* https://download.automotivelinux.org/sstate-mirror/trout/${DEFAULTTUNE}/PATH \n "
 BB_HASHSERVE = "auto"
@@ -6,3 +9,6 @@ IMAGE_INSTALL:append = " corescanner-prototype"
 IMAGE_INSTALL:append = " corescanner-prototype-systemd"
 IMAGE_CLASSES += " cve-summary-copy"
 INHERIT += "vex"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+

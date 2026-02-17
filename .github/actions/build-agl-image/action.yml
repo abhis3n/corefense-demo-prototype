@@ -60,6 +60,7 @@ runs:
         echo "AGL build completed. Setting output variables for kernel and rootfs images..."
 
    - name: Set Output Variables
+     id: set_output
      shell: bash
      run: |
        echo "KERNEL=$GITHUB_WORKSPACE/demo/AGL/qemux86-64/tmp/deploy/images/qemux86-64/bzImage" >> $GITHUB_OUTPUT

@@ -19,8 +19,6 @@ runs:
      shell: bash
      run: |
         cd $GITHUB_WORKSPACE/AGL/trout
-        echo "Cloning meta-corefense layer..."
-        git clone --branch abhis3n/prototype https://github.com/corefense-security/meta-corefense.git 
         if [ ! -d "$GITHUB_WORKSPACE/demo/AGL/qemux86-64" ]; then
           source ./meta-agl/scripts/aglsetup.sh -m qemux86-64 -b $GITHUB_WORKSPACE/demo/AGL/qemux86-64 agl-all-features agl-selinux
         else

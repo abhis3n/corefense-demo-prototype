@@ -2,7 +2,7 @@ name: Scan AGL Image
 
 on:
   push:
-    branches: ['demo/*']
+    branches: ['**']
   workflow_dispatch:
 
 jobs:

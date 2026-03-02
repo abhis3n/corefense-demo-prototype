@@ -24,6 +24,6 @@ jobs:
         with:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           JOB_ID: ${{ github.run_id }}
-          BUILD_DIR: $GITHUB_WORKSPACE/demo/AGL/qemux86-64
-          CORE_AGENT_BIN: $GITHUB_WORKSPACE/demo/AGL/qemux86-64/core-agent
+          BUILD_DIR: ${{ github.workspace }}/demo/AGL/qemux86-64
+          CORE_AGENT_BIN: ${{ github.workspace }}/demo/AGL/qemux86-64/core-agent
           TARGET_IMAGE: agl-image-minimal

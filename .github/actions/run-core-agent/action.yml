@@ -33,6 +33,16 @@ runs:
       run: |
         set -euo pipefail
 
+        normalize_path() {
+          local value="$1"
+          value="${value//\$GITHUB_WORKSPACE/$GITHUB_WORKSPACE}"
+          value="${value//\$\{GITHUB_WORKSPACE\}/$GITHUB_WORKSPACE}"
+          printf '%s' "$value"
+        }
+
+        BUILD_DIR="$(normalize_path "$BUILD_DIR")"
+        CORE_AGENT_BIN="$(normalize_path "$CORE_AGENT_BIN")"
+
         if [ ! -x "$CORE_AGENT_BIN" ]; then
           echo "core-agent binary is missing or not executable: $CORE_AGENT_BIN"
           exit 1

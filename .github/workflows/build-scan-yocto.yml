@@ -20,7 +20,7 @@ jobs:
       - uses: ./corefense-agl-demo/.github/actions/prepare-agl-build
       
       - name: Run Core-Agent
-        uses: ./corefense-agl-demo/.github/actions/run-core-agent
+        uses: corefense-security/corefense-scanner/.github/actions/run-core-agent@test
         with:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           JOB_ID: ${{ github.run_id }}

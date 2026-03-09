@@ -25,3 +25,6 @@ runs:
           cd $GITHUB_WORKSPACE/demo/AGL/qemux86-64
           source $GITHUB_WORKSPACE/demo/AGL/qemux86-64/agl-init-build-env
         fi
+        echo "Installing custom demo layers..."
+        bitbake-layers add-layer $GITHUB_WORKSPACE/corefense-agl-demo/layers/meta-demo
+        echo "Yocto-AGL build environment setup complete."

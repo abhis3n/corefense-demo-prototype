@@ -1,2 +1,2 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
-SRC_URI += "file://badkernel.cfg"
+SRC_URI:append = " file://badkernel.cfg"

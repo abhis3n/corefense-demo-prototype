@@ -1,0 +1,35 @@
+name: Scan AGL Image
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch, tag, or SHA to checkout (overrides default)'
+        required: false
+        default: ''
+
+jobs:
+  build-yocto:
+    name: Build & Scan AGL Image
+    runs-on: [self-hosted, yocto-demo-runner-1]
+  
+    steps:
+      - name: Checkout AGL Demo branch
+        uses: actions/checkout@v4
+        with:
+          path: corefense-agl-demo
+          ref: ${{ github.event.inputs.ref != '' && github.event.inputs.ref || github.ref }}
+
+
+      - uses: ./corefense-agl-demo/.github/actions/prepare-agl-build
+      
+      - name: Run Core-Agent
+        uses: corefense-security/corefense-scanner/.github/actions/run-core-agent@test
+        with:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          JOB_ID: ${{ github.run_id }}
+          BUILD_DIR: ${{ github.workspace }}/demo/AGL/qemux86-64
+          CORE_AGENT_BIN: ${{ github.workspace }}/demo/AGL/qemux86-64/core-agent
+          TARGET_IMAGE: agl-image-minimal

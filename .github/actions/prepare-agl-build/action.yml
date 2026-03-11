@@ -1,0 +1,30 @@
+name: Setup Yocto-AGL Build Environment
+description: Prepare environment for building agl-image-minimal
+
+runs:
+  using: "composite"
+  steps:
+   - name: Clone AGL Repository
+     shell: bash
+     run: |
+        if [ -f /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]; then
+          echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+        fi
+        mkdir -p $GITHUB_WORKSPACE/AGL/trout && cd $GITHUB_WORKSPACE/AGL/trout
+        echo "Cloning AGL repository..."
+        repo init -b trout -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
+        repo sync
+
+   - name: Setup AGL Build Environment
+     shell: bash
+     run: |
+        cd $GITHUB_WORKSPACE/AGL/trout
+        if [ ! -d "$GITHUB_WORKSPACE/demo/AGL/qemux86-64" ]; then
+          source ./meta-agl/scripts/aglsetup.sh -m qemux86-64 -b $GITHUB_WORKSPACE/demo/AGL/qemux86-64 agl-all-features agl-selinux
+        else
+          cd $GITHUB_WORKSPACE/demo/AGL/qemux86-64
+          source $GITHUB_WORKSPACE/demo/AGL/qemux86-64/agl-init-build-env
+        fi
+        echo "Installing custom demo layers..."
+        bitbake-layers add-layer $GITHUB_WORKSPACE/corefense-agl-demo/layers/meta-demo
+        echo "Yocto-AGL build environment setup complete."
